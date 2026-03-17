@@ -7,13 +7,13 @@
 ## Getting started
 
 - Requires Go 1.25+.
-- Install: `go get package`
+- Install: `go get https://github.com/Round-Internet-Money/ethereal-wss`
 
 ## Example Usage
 
 From the client directory:
 
-- `make`
+- `make examples`
 - `bin/example_listen_to_everything`
 
 ## Modifying the package
