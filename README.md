@@ -10,19 +10,19 @@
 ## Getting started
 
 - Requires Go 1.25+.
-- Install from GitHub: `go get github.com/Round-Internet-Money/ethereal-wss`
+- Install from GitHub: `go get github.com/roundinternetmoney/ethereal-wss`
 
 ## Example Usage
 
 From the client directory:
 
-- `make listen_all`
-- `bin/listen_to_everything`
+- `make examples`
+- `bin/example_account_balance`
 
 ## Modifying the package
-- This client depends on protobuf wrappers from [github.com/Round-Internet-Money/pb-dex](https://github.com/Round-Internet-Money/pb-dex).
-- If you want to extend the `.proto` files directly, see the Buf module at [buf.build/round-internet-money/dex](https://buf.build/round-internet-money/dex).
-- Otherwise, use or fork [github.com/Round-Internet-Money/pb-dex](https://github.com/Round-Internet-Money/pb-dex).
+- This client depends on protobuf wrappers from [pkg.go.dev/roundinternet.money/pb-dex](https://pkg.go.dev/roundinternet.money/pb-dex)
+- If you want to extend the `.proto` files directly, see the Buf module at [buf.build/round-internet-money/dex](https://buf.build/round-internet-money/dex)
+- Otherwise, use or fork [github.com/roundinternetmoney/pb-dex](https://github.com/Round-Internet-Money/pb-dex)
 
 Contributing
 -------------
