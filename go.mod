@@ -1,4 +1,4 @@
-module roundinternet.money/ethereal-wss
+module github.com/roundinternetmoney/ethereal-wss
 
 go 1.25.3
 

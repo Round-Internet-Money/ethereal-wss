@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	ws "roundinternet.money/ethereal-wss"
+	ws "github.com/roundinternetmoney/ethereal-wss"
 	etherealv1 "roundinternet.money/protos/gen/dex/ethereal/v1"
 
 	"google.golang.org/protobuf/proto"

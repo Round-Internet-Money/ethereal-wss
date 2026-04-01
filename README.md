@@ -1,6 +1,6 @@
 # Golang Websocket Client for Ethereal API
 
-[![Go Reference](https://pkg.go.dev/badge/roundinternet.money/ethereal-wss.svg)](https://pkg.go.dev/roundinternet.money/ethereal-wss)
+[![Go Reference](https://pkg.go.dev/badge/github.com/roundinternetmoney/ethereal-wss.svg)](https://pkg.go.dev/github.com/roundinternetmoney/ethereal-wss)
 
 
 ## Features
@@ -20,9 +20,9 @@ From the client directory:
 - `bin/example_account_balance`
 
 ## Modifying the package
-- This client depends on protobuf wrappers from [pkg.go.dev/roundinternet.money/pb-dex](https://pkg.go.dev/roundinternet.money/pb-dex)
+- This client depends on protobuf wrappers from [pkg.go.dev/roundinternet.money/protos](https://pkg.go.dev/roundinternet.money/pb-dex)
 - If you want to extend the `.proto` files directly, see the Buf module at [buf.build/round-internet-money/dex](https://buf.build/round-internet-money/dex)
-- Otherwise, use or fork [github.com/roundinternetmoney/pb-dex](https://github.com/Round-Internet-Money/pb-dex)
+- Otherwise, use or fork [github.com/roundinternetmoney/protos](https://github.com/Round-Internet-Money/pb-dex)
 
 Contributing
 -------------
