@@ -1,4 +1,6 @@
-package etherealWss
+// Package ethereal provides a WebSocket client for the Ethereal exchange API.
+// It supports real-time streaming of market data and account events using Protocol Buffers.
+package ethereal
 
 import (
 	"encoding/json"
@@ -7,6 +9,21 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 	etherealv1 "roundinternet.money/protos/gen/dex/ethereal/v1"
+)
+
+// EventType represents the type of event for subscriptions.
+type EventType = etherealv1.EventType
+
+// Event type constants for easy access without importing protos.
+const (
+	EventTypeL2Book                EventType = etherealv1.EventType_EVENT_TYPE_L2_BOOK
+	EventTypeTicker                EventType = etherealv1.EventType_EVENT_TYPE_TICKER
+	EventTypeTradeFill             EventType = etherealv1.EventType_EVENT_TYPE_TRADE_FILL
+	EventTypeSubaccountLiquidation EventType = etherealv1.EventType_EVENT_TYPE_SUBACCOUNT_LIQUIDATION
+	EventTypePositionUpdate        EventType = etherealv1.EventType_EVENT_TYPE_POSITION_UPDATE
+	EventTypeOrderUpdate           EventType = etherealv1.EventType_EVENT_TYPE_ORDER_UPDATE
+	EventTypeOrderFill             EventType = etherealv1.EventType_EVENT_TYPE_ORDER_FILL
+	EventTypeTokenTransfer         EventType = etherealv1.EventType_EVENT_TYPE_TOKEN_TRANSFER
 )
 
 var ErrUnknownEvent = errors.New("unknown event")
@@ -23,7 +40,7 @@ type WebsocketRequest struct {
 	D interface{} `json:"data"`
 }
 
-func (i Intent) MarshalEventData(event etherealv1.EventType, to string) ([]byte, error) {
+func (i Intent) MarshalEventData(event EventType, to string) ([]byte, error) {
 	var data interface{}
 	switch event {
 	case etherealv1.EventType_EVENT_TYPE_L2_BOOK,
@@ -48,7 +65,7 @@ func (i Intent) MarshalEventData(event etherealv1.EventType, to string) ([]byte,
 	return json.Marshal(WebsocketRequest{i, data})
 }
 
-func UnmarshalEvent(event etherealv1.EventType, data []byte) (proto.Message, error) {
+func UnmarshalEvent(event EventType, data []byte) (proto.Message, error) {
 	var m proto.Message
 	switch event {
 	case etherealv1.EventType_EVENT_TYPE_L2_BOOK:

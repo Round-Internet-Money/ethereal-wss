@@ -10,8 +10,6 @@ import (
 
 	ws "github.com/roundinternetmoney/ethereal-wss"
 	etherealv1 "roundinternet.money/protos/gen/dex/ethereal/v1"
-
-	"google.golang.org/protobuf/proto"
 )
 
 const bitcoinSymbol = "BTCUSD"
@@ -23,21 +21,30 @@ func main() {
 	client := ws.NewClient(ctx, ws.Mainnet)
 	defer client.Close()
 
-	events := []etherealv1.EventType{
-		etherealv1.EventType_EVENT_TYPE_L2_BOOK,
-		etherealv1.EventType_EVENT_TYPE_TICKER,
-		etherealv1.EventType_EVENT_TYPE_TRADE_FILL,
+	// Set typed callbacks for each event type
+	client.OnL2Book(func(msg *etherealv1.L2Book) {
+		fmt.Printf("[L2Book] %v\n", msg)
+	})
+	client.OnTicker(func(msg *etherealv1.Ticker) {
+		fmt.Printf("[Ticker] %v\n", msg)
+	})
+	client.OnTradeFill(func(msg *etherealv1.TradeFill) {
+		fmt.Printf("[TradeFill] %v\n", msg)
+	})
+
+	events := []ws.EventType{
+		ws.EventTypeL2Book,
+		ws.EventTypeTicker,
+		ws.EventTypeTradeFill,
 	}
 
 	for _, event := range events {
-		if err := client.SubscribeWithCallback(ctx, event, bitcoinSymbol, func(msg proto.Message) {
-			fmt.Printf("[%s] %T %v\n", event.String(), msg, msg)
-		}); err != nil {
-			log.Fatalf("subscribe %s: %v", event.String(), err)
+		if err := client.Subscribe(ctx, event, bitcoinSymbol); err != nil {
+			log.Fatalf("subscribe %s: %v", event, err)
 		}
 	}
 
-	subscriptionPayload, err := ws.Sub.MarshalEventData(etherealv1.EventType_EVENT_TYPE_TICKER, bitcoinSymbol)
+	subscriptionPayload, err := ws.Sub.MarshalEventData(ws.EventTypeTicker, bitcoinSymbol)
 	if err != nil {
 		log.Fatalf("unable to build ticker subscription: %v", err)
 	}

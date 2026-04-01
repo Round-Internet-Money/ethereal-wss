@@ -1,19 +1,19 @@
-.PHONY: examples listen_to_everything wss version tag release
+.PHONY: examples log_bitcoin_events wss version tag release
 
 LATEST_TAG := $(shell git describe --tags --abbrev=0 --match 'v[0-9]*' 2>/dev/null || echo v0.0.0)
 VERSION := $(patsubst v%,%,$(LATEST_TAG))
 PATCH_VERSION := $(shell echo $(VERSION) | awk -F. '{printf "%d.%d.%d", $$1, $$2, $$3+1}')
 NEW_VERSION ?= $(PATCH_VERSION)
 
-examples: listen_to_everything
+examples: log_bitcoin_events
 
-listen_to_everything:
-	go build -o bin/listen_to_everything examples/listen_to_everything/main.go
+log_bitcoin_events:
+	go build -o bin/log_bitcoin_events examples/log_bitcoin_events/main.go
 
-wss:
-	go vet ./...
-	go test ./...
-	go build ./...
+wss: 
+	go vet .
+	go test .
+	make examples
 
 version:
 	@echo "Current version: $(VERSION)"
