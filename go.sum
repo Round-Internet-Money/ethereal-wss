@@ -1,10 +1,8 @@
-buf.build/gen/go/round-internet-money/dex/protocolbuffers/go v1.36.11-20260317005403-e1bf6fd9924d.1 h1:HCDkuV9IMDZCoIQaEIJZJTSeLpssHnzm93w4AcorE/8=
-buf.build/gen/go/round-internet-money/dex/protocolbuffers/go v1.36.11-20260317005403-e1bf6fd9924d.1/go.mod h1:sbW1wjaxQtw1A0bBfK7B4W7scdMfvXPtagnYSTkeQUU=
 github.com/coder/websocket v1.8.14 h1:9L0p0iKiNOibykf283eHkKUHHrpG7f65OE3BhhO7v9g=
 github.com/coder/websocket v1.8.14/go.mod h1:NX3SzP+inril6yawo5CQXx8+fk145lPDC6pumgx0mVg=
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
 github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
 google.golang.org/protobuf v1.36.11 h1:fV6ZwhNocDyBLK0dj+fg8ektcVegBBuEolpbTQyBNVE=
 google.golang.org/protobuf v1.36.11/go.mod h1:HTf+CrKn2C3g5S8VImy6tdcUvCska2kB7j23XfzDpco=
-roundinternet.money/pb-dex v0.0.0-20260317010626-cf790bf095f4 h1:bt1kzbSM66IVCaHjL0Lt9WlYFZb/lASi5ubteDYH0pc=
-roundinternet.money/pb-dex v0.0.0-20260317010626-cf790bf095f4/go.mod h1:9Xd7awE+QsTR/py8vS3M7N5SFR3fMk58JSfWo4eq4Qw=
+roundinternet.money/protos v0.1.0 h1:LNgoryti4lcs4Dm6cied3CnA/GSjiQLUxQIySnH3Akc=
+roundinternet.money/protos v0.1.0/go.mod h1:1ix9ND/fhFh4DoFSjMlnO6FF/eMK0w42DWUC5nXDJmQ=

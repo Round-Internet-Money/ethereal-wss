@@ -1,38 +1,15 @@
 package etherealWss
 
 import (
-	"context"
 	"encoding/json"
+	"errors"
 
-	"github.com/coder/websocket"
+	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
+	etherealv1 "roundinternet.money/protos/gen/dex/ethereal/v1"
 )
 
-type EventData interface{}
-
-type SymbolEvent struct {
-	EventData
-	T string `json:"type"`
-	S string `json:"symbol"`
-}
-type SubaccountEvent struct {
-	EventData
-	T string `json:"type"`
-	S string `json:"subaccountId"`
-}
-
-type Subscription[Proto proto.Message, Data EventData] struct {
-	*websocket.Conn
-	eventName string
-	data      Proto
-	Callback  func(Proto)
-
-	eventType EventData
-}
-
-func NewSubscription[P proto.Message, D EventData](callback func(P)) *Subscription[P, D] {
-	return &Subscription[P, D]{}
-}
+var ErrUnknownEvent = errors.New("unknown event")
 
 type Intent string
 
@@ -41,23 +18,89 @@ const (
 	Unsub Intent = "unsubscribe"
 )
 
-type SubscriptionIntent[T EventData] struct {
-	I Intent    `json:"event"`
-	D EventData `json:"data"`
+type WebsocketRequest struct {
+	I Intent      `json:"event"`
+	D interface{} `json:"data"`
 }
 
-func (c *Subscription[_, EventData]) Subscribe(ctx context.Context) error {
-	if bytes, err := json.Marshal(&SubscriptionIntent[EventData]{I: Sub, D: c.eventType}); err != nil {
-		return err
-	} else {
-		return c.Write(ctx, websocket.MessageBinary, bytes)
+func (i Intent) MarshalEventData(event etherealv1.EventType, to string) ([]byte, error) {
+	var data interface{}
+	switch event {
+	case etherealv1.EventType_EVENT_TYPE_L2_BOOK,
+		etherealv1.EventType_EVENT_TYPE_TICKER,
+		etherealv1.EventType_EVENT_TYPE_TRADE_FILL:
+		data = struct {
+			T string `json:"type"`
+			S string `json:"symbol"`
+		}{etherealv1.EventType_json_name[event], to}
+	case etherealv1.EventType_EVENT_TYPE_SUBACCOUNT_LIQUIDATION,
+		etherealv1.EventType_EVENT_TYPE_POSITION_UPDATE,
+		etherealv1.EventType_EVENT_TYPE_ORDER_UPDATE,
+		etherealv1.EventType_EVENT_TYPE_ORDER_FILL,
+		etherealv1.EventType_EVENT_TYPE_TOKEN_TRANSFER:
+		data = struct {
+			T string `json:"type"`
+			S string `json:"subaccountId"`
+		}{etherealv1.EventType_json_name[event], to}
+	default:
+		return nil, ErrUnknownEvent
 	}
+	return json.Marshal(WebsocketRequest{i, data})
 }
 
-func (c *Subscription[_, EventData]) Unsubscribe(ctx context.Context) error {
-	if bytes, err := json.Marshal(&SubscriptionIntent[EventData]{I: Unsub, D: c.eventType}); err != nil {
-		return err
-	} else {
-		return c.Write(ctx, websocket.MessageBinary, bytes)
+func UnmarshalEvent(event etherealv1.EventType, data []byte) (proto.Message, error) {
+	var m proto.Message
+	switch event {
+	case etherealv1.EventType_EVENT_TYPE_L2_BOOK:
+		m = new(etherealv1.L2Book)
+	case etherealv1.EventType_EVENT_TYPE_TICKER:
+		m = new(etherealv1.Ticker)
+	case etherealv1.EventType_EVENT_TYPE_TRADE_FILL:
+		m = new(etherealv1.TradeFill)
+	case etherealv1.EventType_EVENT_TYPE_SUBACCOUNT_LIQUIDATION:
+		m = new(etherealv1.SubaccountLiquidation)
+	case etherealv1.EventType_EVENT_TYPE_POSITION_UPDATE:
+		m = new(etherealv1.PositionUpdate)
+	case etherealv1.EventType_EVENT_TYPE_ORDER_UPDATE:
+		m = new(etherealv1.OrderUpdate)
+	case etherealv1.EventType_EVENT_TYPE_ORDER_FILL:
+		m = new(etherealv1.OrderFill)
+	case etherealv1.EventType_EVENT_TYPE_TOKEN_TRANSFER:
+		m = new(etherealv1.TokenTransfer)
+	default:
+		return nil, ErrUnknownEvent
 	}
+	if err := protojson.Unmarshal(data, m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
+
+// type Subscription[Proto proto.Message, Data EventData] struct {
+// 	*websocket.Conn
+// 	eventName string
+// 	data      Proto
+// 	Callback  func(Proto)
+
+// 	eventType EventData
+// }
+
+// func NewSubscription[P proto.Message, D EventData](callback func(P)) *Subscription[P, D] {
+// 	return &Subscription[P, D]{}
+// }
+
+// func (c *Subscription[_, EventData]) Subscribe(ctx context.Context) error {
+// 	if bytes, err := json.Marshal(&SubscriptionIntent[EventData]{I: Sub, D: c.eventType}); err != nil {
+// 		return err
+// 	} else {
+// 		return c.Write(ctx, websocket.MessageBinary, bytes)
+// 	}
+// }
+
+// func (c *Subscription[_, EventData]) Unsubscribe(ctx context.Context) error {
+// 	if bytes, err := json.Marshal(&SubscriptionIntent[EventData]{I: Unsub, D: c.eventType}); err != nil {
+// 		return err
+// 	} else {
+// 		return c.Write(ctx, websocket.MessageBinary, bytes)
+// 	}
+// }
