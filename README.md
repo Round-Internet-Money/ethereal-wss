@@ -1,7 +1,7 @@
 # Golang Websocket Client for Ethereal API
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/roundinternetmoney/ethereal-wss.svg)](https://pkg.go.dev/github.com/roundinternetmoney/ethereal-wss)
-[![Go Report Card](https://goreportcard.com/badge/github.com/roundinternetmoney/ethereal-wss)](https://goreportcard.com/report/github.com/roundinternetmoney/ethereal-wss)
+[![Go Reference](https://pkg.go.dev/badge/github.com/roundinternetmoney/ethereal-wss/v2.svg)](https://pkg.go.dev/github.com/roundinternetmoney/ethereal-wss/v2)
+[![Go Report Card](https://goreportcard.com/badge/github.com/roundinternetmoney/ethereal-wss/v2)](https://goreportcard.com/report/github.com/roundinternetmoney/ethereal-wss/v2)
 [![CI](https://github.com/roundinternetmoney/ethereal-wss/actions/workflows/ci.yml/badge.svg)](https://github.com/roundinternetmoney/ethereal-wss/actions/workflows/ci.yml)
 
 
@@ -12,7 +12,7 @@
 ## Getting started
 
 - Requires Go 1.25+.
-- Install from GitHub: `go get github.com/roundinternetmoney/ethereal-wss`
+- Install from GitHub: `go get github.com/roundinternetmoney/ethereal-wss/v2`
 
 ## Example Usage
 
@@ -23,7 +23,7 @@ import (
     "context"
     "log"
 
-    "github.com/roundinternetmoney/ethereal-wss"
+    "github.com/roundinternetmoney/ethereal-wss/v2"
     etherealv1 "roundinternet.money/protos/gen/dex/ethereal/v1"
 )
 

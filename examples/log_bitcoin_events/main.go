@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	ws "github.com/roundinternetmoney/ethereal-wss"
+	ws "github.com/roundinternetmoney/ethereal-wss/v2"
 	etherealv1 "roundinternet.money/protos/gen/dex/ethereal/v1"
 )
 
@@ -43,12 +43,6 @@ func main() {
 			log.Fatalf("subscribe %s: %v", event, err)
 		}
 	}
-
-	subscriptionPayload, err := ws.Sub.MarshalEventData(ws.EventTypeTicker, bitcoinSymbol)
-	if err != nil {
-		log.Fatalf("unable to build ticker subscription: %v", err)
-	}
-	fmt.Printf("ticker subscribe payload: %s\n", subscriptionPayload)
 
 	errCh := make(chan error, 1)
 	go func() {
