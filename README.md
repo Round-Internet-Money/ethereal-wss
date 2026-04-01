@@ -53,7 +53,7 @@ For more examples, see the `examples/` directory.
 ## Modifying the package
 - This client depends on protobuf wrappers from [pkg.go.dev/roundinternet.money/protos](https://pkg.go.dev/roundinternet.money/protos)
 - If you want to extend the `.proto` files directly, see the Buf module at [buf.build/round-internet-money/dex](https://buf.build/round-internet-money/dex)
-- Otherwise, use or fork [github.com/Round-Internet-Money/pb-dex](https://github.com/Round-Internet-Money/pb-dex)
+- Otherwise, use or fork [github.com/roundinternetmoney/protos](https://github.com/roundinternetmoney/protos)
 
 Contributing
 -------------
