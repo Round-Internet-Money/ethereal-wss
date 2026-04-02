@@ -1,5 +1,3 @@
-// Package ethereal provides a WebSocket client for the Ethereal exchange API.
-// It supports real-time streaming of market data and account events using Protocol Buffers.
 package ethereal
 
 import (

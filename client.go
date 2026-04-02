@@ -1,5 +1,6 @@
-// Package ethereal provides a WebSocket client for the Ethereal exchange API.
+// This package provides a WebSocket client for the Ethereal exchange API.
 // It supports real-time streaming of market data and account events using Protocol Buffers.
+// Some proto stubs are built for use with NATS, but integration is optional: examples using these are prefixed with "nats_".
 package ethereal
 
 import (
