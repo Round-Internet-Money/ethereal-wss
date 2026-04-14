@@ -4,7 +4,6 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/roundinternetmoney/ethereal-wss/v2)](https://goreportcard.com/report/github.com/roundinternetmoney/ethereal-wss/v2)
 [![CI](https://github.com/roundinternetmoney/ethereal-wss/actions/workflows/ci.yml/badge.svg)](https://github.com/roundinternetmoney/ethereal-wss/actions/workflows/ci.yml)
 
-
 ## Features
 - Protobuf support.
 - Minimal dependencies
@@ -49,6 +48,8 @@ func main() {
 ```
 
 For more examples, see the `examples/` directory.
+Some proto stubs are built for use with NATS, but integration is optional. 
+examples using these are prefixed with "nats_".
 
 ## Modifying the package
 - This client depends on protobuf wrappers from [pkg.go.dev/roundinternet.money/protos](https://pkg.go.dev/roundinternet.money/protos)
@@ -61,5 +62,4 @@ Contributions are welcome! Please open issues or pull requests as needed.
 
 
 ## Todo
-
 - Add a `resubscribe` intent helper.
